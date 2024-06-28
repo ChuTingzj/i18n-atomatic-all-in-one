@@ -1,46 +1,169 @@
-# rollup-starter-lib
+# i18n-atomatic-all-in-one
 
-[![Greenkeeper badge](https://badges.greenkeeper.io/rollup/rollup-starter-lib.svg)](https://greenkeeper.io/)
-
-This repo contains a bare-bones example of how to create a library using Rollup, including importing a module from `node_modules` and converting it from CommonJS.
-
-We're creating a library called `how-long-till-lunch`, which usefully tells us how long we have to wait until lunch, using the [ms](https://github.com/zeit/ms) package:
-
-```js
-console.log('it will be lunchtime in ' + howLongTillLunch());
+## webpack-loader
+### vue2
+**case(based on RegExp)**
+1. 使用中文的属性值
+```html
+<template>
+  <img alt="图片描述" src="example.jpg" />
+</template>
 ```
 
-## Getting started
-
-Clone this repository and install its dependencies:
-
-```bash
-git clone https://github.com/rollup/rollup-starter-lib
-cd rollup-starter-lib
-npm install
+2. 标签内的文本节点
+```html
+<template>
+  <div>
+    <p>这是一个段落。</p>
+    <h1>标题</h1>
+    <button>提交</button>
+  </div>
+</template>
 ```
 
-`npm run build` builds the library to `dist`, generating three files:
+3. 函数的入参
+```html
+<script>
+export default {
+  methods: {
+    onClick() {
+      alert('这是一个提示信息');
+    },
+  },
+};
+</script>
+```
 
-* `dist/how-long-till-lunch.cjs.js`
-    A CommonJS bundle, suitable for use in Node.js, that `require`s the external dependency. This corresponds to the `"main"` field in package.json
-* `dist/how-long-till-lunch.esm.js`
-    an ES module bundle, suitable for use in other people's libraries and applications, that `import`s the external dependency. This corresponds to the `"module"` field in package.json
-* `dist/how-long-till-lunch.umd.js`
-    a UMD build, suitable for use in any environment (including the browser, as a `<script>` tag), that includes the external dependency. This corresponds to the `"browser"` field in package.json
+4. 在data函数中定义的变量
+```html
+<script>
+export default {
+  data() {
+    return {
+      info: '这是一些信息',
+    };
+  },
+};
+</script>
+```
 
-`npm run dev` builds the library, then keeps rebuilding it whenever the source files change using [rollup-watch](https://github.com/rollup/rollup-watch).
+5. 在方法中定义的变量
+```html
+<script>
+export default {
+  methods: {
+    onClick() {
+      const info = '这是一个提示信息'
+      alert(info);
+    },
+  },
+};
+</script>
+```
+### vue3
+**case(based on RegExp)**
+1. 使用中文的属性值
+```html
+<template>
+  <img alt="图片描述" src="example.jpg" />
+</template>
+```
 
-`npm test` builds the library, then tests it.
+2. 标签内的文本节点
+```html
+<template>
+  <div>
+    <p>这是一个段落。</p>
+    <h1>标题</h1>
+    <button>提交</button>
+  </div>
+</template>
+```
 
-## Variations
+3. 函数的入参
+```html
+<script setup lang="ts">
+import {ref} from 'vue'
+const info = ref('提示')
+const onClick = () =>  alert('这是一个提示信息')
+</script>
+```
 
-* [babel](https://github.com/rollup/rollup-starter-lib/tree/babel) — illustrates writing the source code in ES2015 and transpiling it for older environments with [Babel](https://babeljs.io/)
-* [buble](https://github.com/rollup/rollup-starter-lib/tree/buble) — similar, but using [Bublé](https://buble.surge.sh/) which is a faster alternative with less configuration
-* [TypeScript](https://github.com/rollup/rollup-starter-lib/tree/typescript) — uses [TypeScript](https://www.typescriptlang.org/) for type-safe code and transpiling
+4. 在方法中定义的变量
+```html
+<script setup lang="ts">
+const onClick = () => {
+    const info = '这是一个提示信息'
+    alert(info)
+}
+</script>
+```
 
+5. 对象中的中文
+```html
+<script setup lang="ts">
+import {reactive} from 'vue'
+const info = reactive({message:'这是一个提示信息'})
+const onClick = () =>  alert(info.message)
+</script>
+```
 
+### react
+**case(based on RegExp)**
+1. 使用中文的属性值
+```jsx
+export const Component = () => {
+    return (
+        <img alt="图片描述" src="example.jpg" />
+    )
+}
+```
 
+2. 标签内的文本节点
+```jsx
+export const Component = () => {
+    return (
+        <div>
+            <p>这是一个段落。</p>
+            <h1>标题</h1>
+            <button>提交</button>
+        </div>
+    )
+}
+```
+
+3. 函数的入参
+```jsx
+import {useCallback} from 'react'
+export const Component = () => {
+  const fn = (message) => alert(message)
+  fn('消息') 
+}
+```
+
+4. 在方法中定义的变量
+```jsx
+export const Component = () => {
+    const handler = () => {
+        const message = '消息'
+        alert(message)
+    }
+    return (
+        <div>123</div>
+    )
+}
+```
+
+5. 对象中的中文
+```jsx
+import {useMemo} from 'react'
+export const Component = () => {
+    const obj = useMemo(()=>({name:'姓名'}),[])
+    return (
+        <div>123</div>
+    )
+}
+```
 ## License
 
 [MIT](LICENSE).
